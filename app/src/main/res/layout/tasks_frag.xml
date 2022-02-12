@@ -72,8 +72,8 @@
                         android:id="@+id/tasks_list"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        app:items="@{viewmodel.items}" />
+                        app:items="@{viewmodel.items}"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
                 </LinearLayout>
 
                 <LinearLayout

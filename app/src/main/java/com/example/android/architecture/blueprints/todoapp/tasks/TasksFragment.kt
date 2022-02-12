@@ -64,16 +64,20 @@ class TasksFragment : Fragment() {
         return viewDataBinding.root
     }
 
+    // 상단 배너 오른쪽 필터 및 옵션 선택하는 함수
     override fun onOptionsItemSelected(item: MenuItem) =
         when (item.itemId) {
             R.id.menu_clear -> {
+                // Task Completed 확인된 내역 삭제
                 viewModel.clearCompletedTasks()
                 true
             }
+            // 필터 메뉴 팝업
             R.id.menu_filter -> {
                 showFilteringPopUpMenu()
                 true
             }
+            // 새로고침
             R.id.menu_refresh -> {
                 viewModel.loadTasks(true)
                 true
@@ -99,9 +103,11 @@ class TasksFragment : Fragment() {
 
     private fun setupNavigation() {
         viewModel.openTaskEvent.observe(viewLifecycleOwner, EventObserver {
+            // 무슨 그래프가 나오는데 이건 뭔지 모르겠음.
             openTaskDetails(it)
         })
         viewModel.newTaskEvent.observe(viewLifecycleOwner, EventObserver {
+            // 이것도 마찬가지
             navigateToAddNewTask()
         })
     }
@@ -109,18 +115,21 @@ class TasksFragment : Fragment() {
     private fun setupSnackbar() {
         view?.setupSnackbar(viewLifecycleOwner, viewModel.snackbarText, Snackbar.LENGTH_SHORT)
         arguments?.let {
+            // Task 추가 시 메시지
             viewModel.showEditResultMessage(args.userMessage)
         }
     }
-
+    // 필터 메뉴 팝업
     private fun showFilteringPopUpMenu() {
         val view = activity?.findViewById<View>(R.id.menu_filter) ?: return
         PopupMenu(requireContext(), view).run {
             menuInflater.inflate(R.menu.filter_tasks, menu)
 
+            // 필터링 메뉴 선택 리스너
             setOnMenuItemClickListener {
                 viewModel.setFiltering(
                     when (it.itemId) {
+                        // TaskViewModel 의 setFiltering, filterItems 함수에서 정의
                         R.id.active -> TasksFilterType.ACTIVE_TASKS
                         R.id.completed -> TasksFilterType.COMPLETED_TASKS
                         else -> TasksFilterType.ALL_TASKS
@@ -136,6 +145,7 @@ class TasksFragment : Fragment() {
     private fun setupFab() {
         requireView().findViewById<FloatingActionButton>(R.id.add_task_fab)?.let {
             it.setOnClickListener {
+                // Task 추가
                 navigateToAddNewTask()
             }
         }

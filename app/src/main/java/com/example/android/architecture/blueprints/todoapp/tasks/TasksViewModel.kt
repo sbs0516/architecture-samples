@@ -146,7 +146,7 @@ class TasksViewModel(
         _noTaskIconRes.value = noTaskIconDrawable
         _tasksAddViewVisible.value = tasksAddVisible
     }
-
+    // Completed 삭제
     fun clearCompletedTasks() {
         viewModelScope.launch {
             tasksRepository.clearCompletedTasks()
